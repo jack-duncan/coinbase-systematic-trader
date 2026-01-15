@@ -14,8 +14,8 @@ MAKER_FEE = 0.006  # 0.6% maker fee
 TAKER_FEE = 0.012  # 1.2% taker fee
 
 # Portfolio optimization parameters
-LOOKBACK_DAYS = 60  # Days of historical data for optimization
-EWMA_HALFLIFE = 60  # Half-life for EWMA covariance (days)
+LOOKBACK_DAYS = 75  # Days of historical data for optimization
+EWMA_HALFLIFE = 75  # Half-life for EWMA covariance (days)
 MOMENTUM_SHRINKAGE = 0.1  # Shrinkage factor γ for expected returns
 
 # Portfolio products

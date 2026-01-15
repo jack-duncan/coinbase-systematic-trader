@@ -270,6 +270,9 @@ Round orders to Coinbase’s step sizes and minimum notional limits.
 - Executes:
   - `pull_data.py` (past 60 days)
   - `optimize_portfolio.py`
+- `--force` tag
+  - Bypasses rebalancing bands and turnover cap,
+  - Use with caution
 
 ### show_optimal_portfolio.py
 - Displays optimal portfolio allocation based on latest 60 days of data
@@ -307,6 +310,7 @@ Round orders to Coinbase’s step sizes and minimum notional limits.
 
 ## Results
 
+**NOTE** need to retest with more data as of 1/15, the 75 day is outperforming the 60 day
 **Backtest period:** 2025-07-20 → 2025-10-17  
 **Tested windows:** 15 d, 30 d, 45 d, 60 d, 75 d  
 **Initial portfolio value:** \$10,000  

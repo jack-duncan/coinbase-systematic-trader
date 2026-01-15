@@ -21,6 +21,9 @@ API_KEY_NAME = os.getenv('COINBASE_API_KEY_NAME')
 PRIVATE_KEY = os.getenv('COINBASE_PRIVATE_KEY')
 BASE_URL = 'https://api.coinbase.com'
 
+# Simple CLI switch to force executing trades even when computed turnover is tiny
+FORCE_REBALANCE = ('--force' in sys.argv) or ('-f' in sys.argv)
+
 def build_jwt(method, path):
     pk = serialization.load_pem_private_key(PRIVATE_KEY.encode('utf-8'), None, default_backend())
     payload = {'sub': API_KEY_NAME, 'iss': 'coinbase-cloud', 'nbf': int(time.time()), 'exp': int(time.time())+120, 'uri': f"{method} api.coinbase.com{path}"}
@@ -105,9 +108,17 @@ def rebalance():
         data = json.load(f)
     
     price_matrix = np.array([[item['close'] for item in data[pid][-60:]] for pid in RISKY_ASSETS]).T
-    result = optimize_portfolio(price_matrix, current_weights=current_weights, halflife=60)
-    target_weights = result['weights']
-    delta_weights = result['delta_weights']
+    # If forcing a rebalance, request unconstrained optimal weights
+    if FORCE_REBALANCE:
+        print("FORCE MODE: Bypassing rebalancing bands and turnover cap — computing unconstrained optimal allocation.")
+        result = optimize_portfolio(price_matrix, current_weights=None, halflife=60)
+        target_weights = result['weights']
+        # Compute delta relative to current holdings so we can execute trades
+        delta_weights = target_weights - current_weights
+    else:
+        result = optimize_portfolio(price_matrix, current_weights=current_weights, halflife=60)
+        target_weights = result['weights']
+        delta_weights = result['delta_weights']
     
     print("\nOptimal Allocation:")
     for i,pid in enumerate(RISKY_ASSETS):
@@ -121,7 +132,7 @@ def rebalance():
     
     trades = []
     
-    if turnover < 0.001:
+    if turnover < 0.001 and not FORCE_REBALANCE:
         print("✓ No rebalance needed\n"+"="*70)
         # Still log even when no trades
         history_file = Path(__file__).parent.parent/'logs'/'trade_history.json'
@@ -151,6 +162,8 @@ def rebalance():
         with open(history_file, 'w') as f:
             json.dump(history, f, indent=2)
         return
+    elif FORCE_REBALANCE:
+        print("FORCE MODE: Proceeding with trades despite small computed turnover.")
     
     # Sells first
     for i,pid in enumerate(RISKY_ASSETS):

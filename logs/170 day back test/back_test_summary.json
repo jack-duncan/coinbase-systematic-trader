@@ -1,0 +1,83 @@
+{
+  "windows": {
+    "15": {
+      "return_pct": -12.646070981930588,
+      "sharpe": 0.9250516600254619,
+      "max_drawdown_pct": 23.022682458075053,
+      "num_rebalances": 57,
+      "fees_pct": 23.629911480784028
+    },
+    "30": {
+      "return_pct": -4.230118653600911,
+      "sharpe": 1.1441808964299032,
+      "max_drawdown_pct": 22.50997723766128,
+      "num_rebalances": 48,
+      "fees_pct": 19.22099484531202
+    },
+    "45": {
+      "return_pct": -3.8274275764468078,
+      "sharpe": 0.5336041768067328,
+      "max_drawdown_pct": 20.563828055873525,
+      "num_rebalances": 29,
+      "fees_pct": 10.757307344675377
+    },
+    "60": {
+      "return_pct": 9.874591952196697,
+      "sharpe": 1.4535613481187075,
+      "max_drawdown_pct": 17.20397704524238,
+      "num_rebalances": 21,
+      "fees_pct": 8.273606982463843
+    },
+    "75": {
+      "return_pct": 12.149310639306586,
+      "sharpe": 1.7614481073690125,
+      "max_drawdown_pct": 13.932507281429718,
+      "num_rebalances": 18,
+      "fees_pct": 6.512414027003944
+    }
+  },
+  "benchmarks": {
+    "equal_weight": {
+      "initial": 10000.0,
+      "final": 9791.526791153601,
+      "return_pct": -2.0847320884639884,
+      "volatility": 0.34638656064909595,
+      "sharpe": -0.13135969683366214
+    },
+    "BTC-USDC_only": {
+      "initial": 10000.0,
+      "final": 8146.0228982140825,
+      "return_pct": -18.539771017859174,
+      "volatility": 0.3737589602440738,
+      "sharpe": -1.1849103367484308
+    },
+    "ETH-USDC_only": {
+      "initial": 10000.0,
+      "final": 8632.83505316972,
+      "return_pct": -13.671649468302805,
+      "volatility": 0.6826388076600369,
+      "sharpe": -0.4651235799733866
+    },
+    "PAXG-USDC_only": {
+      "initial": 10000.0,
+      "final": 14010.628150974266,
+      "return_pct": 40.10628150974266,
+      "volatility": 0.21767659808316198,
+      "sharpe": 3.345969981445739
+    },
+    "SOL-USDC_only": {
+      "initial": 10000.0,
+      "final": 7988.298829882983,
+      "return_pct": -20.117011701170167,
+      "volatility": 0.7621819894831526,
+      "sharpe": -0.6364602479676352
+    },
+    "risk_free": {
+      "initial": 10000.0,
+      "final": 10180.922788423948,
+      "return_pct": 1.8092278842394807,
+      "volatility": 0.0,
+      "sharpe": 0.0
+    }
+  }
+}
