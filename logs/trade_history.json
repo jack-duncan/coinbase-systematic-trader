@@ -466,5 +466,47 @@
       "SOL-USDC": 0.0
     },
     "final_usdc_weight": 0.46588287683061486
+  },
+  {
+    "timestamp": "2026-01-15T19:10:15.099084+00:00",
+    "portfolio_value": 162.93250691539998,
+    "current_weights": {
+      "BTC-USDC": 0.0,
+      "ETH-USDC": 0.29184152014975007,
+      "PAXG-USDC": 0.6546861956490148,
+      "SOL-USDC": 0.0
+    },
+    "current_usdc_weight": 0.05347228420123528,
+    "target_weights": {
+      "BTC-USDC": 0.0,
+      "ETH-USDC": 0.24500716516135096,
+      "PAXG-USDC": 0.7050388369639102,
+      "SOL-USDC": 0.0
+    },
+    "target_usdc_weight": 0.049953997874738754,
+    "total_turnover": 0.4157228780302211,
+    "trades": [
+      {
+        "product_id": "ETH-USDC",
+        "side": "buy",
+        "base_size": 0.005250753969471946,
+        "order_id": "c9c4e018-1397-47f9-b63d-5d089bc6819c",
+        "status": "success"
+      },
+      {
+        "product_id": "PAXG-USDC",
+        "side": "buy",
+        "base_size": 0.013686526831382013,
+        "order_id": "7ef527ec-32cf-4e92-9c4c-302fa8325f7e",
+        "status": "success"
+      }
+    ],
+    "final_weights": {
+      "BTC-USDC": 0.0,
+      "ETH-USDC": 0.29184152014975007,
+      "PAXG-USDC": 0.6546861956490148,
+      "SOL-USDC": 0.0
+    },
+    "final_usdc_weight": 0.05347228420123528
   }
 ]

@@ -7,7 +7,7 @@ from pathlib import Path
 import numpy as np
 
 sys.path.insert(0, str(Path(__file__).parent))
-from globals import RISKY_ASSETS
+from globals import RISKY_ASSETS, LOOKBACK_DAYS, EWMA_HALFLIFE
 from optimize_portfolio import optimize_portfolio
 
 from dotenv import load_dotenv
@@ -102,21 +102,21 @@ def rebalance():
     
     # Step 2: Optimize
     print("\n"+"="*70+"\nSTEP 2: Running Optimization\n"+"-"*70)
-    subprocess.run([sys.executable, str(Path(__file__).parent/'pull_data.py'), '-days', '60'], capture_output=True)
+    subprocess.run([sys.executable, str(Path(__file__).parent/'pull_data.py'), '-days', str(LOOKBACK_DAYS)], capture_output=True)
     
     with open(Path(__file__).parent.parent/'logs'/'data.json') as f:
         data = json.load(f)
     
-    price_matrix = np.array([[item['close'] for item in data[pid][-60:]] for pid in RISKY_ASSETS]).T
+    price_matrix = np.array([[item['close'] for item in data[pid][-LOOKBACK_DAYS:]] for pid in RISKY_ASSETS]).T
     # If forcing a rebalance, request unconstrained optimal weights
     if FORCE_REBALANCE:
         print("FORCE MODE: Bypassing rebalancing bands and turnover cap — computing unconstrained optimal allocation.")
-        result = optimize_portfolio(price_matrix, current_weights=None, halflife=60)
+        result = optimize_portfolio(price_matrix, current_weights=None, halflife=EWMA_HALFLIFE)
         target_weights = result['weights']
         # Compute delta relative to current holdings so we can execute trades
         delta_weights = target_weights - current_weights
     else:
-        result = optimize_portfolio(price_matrix, current_weights=current_weights, halflife=60)
+        result = optimize_portfolio(price_matrix, current_weights=current_weights, halflife=EWMA_HALFLIFE)
         target_weights = result['weights']
         delta_weights = result['delta_weights']
     
