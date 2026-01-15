@@ -308,6 +308,46 @@ Round orders to Coinbase’s step sizes and minimum notional limits.
 
 ---
 
+## Automated Daily Execution
+
+The trading script is configured to run automatically on login using macOS launchd.
+
+### Setup
+
+The launch agent is defined in `~/Library/LaunchAgents/com.coinbase.dailytrade.plist` and will execute the daily trade script each time you log into your Mac.
+
+To load the agent:
+```bash
+launchctl load ~/Library/LaunchAgents/com.coinbase.dailytrade.plist
+```
+
+To verify it's running:
+```bash
+launchctl list | grep coinbase
+```
+
+### Logs
+
+Execution logs are written to:
+- Standard output: `/tmp/coinbase_trade.log`
+- Errors: `/tmp/coinbase_trade_error.log`
+
+### Disable/Remove
+
+To temporarily disable:
+```bash
+launchctl unload ~/Library/LaunchAgents/com.coinbase.dailytrade.plist
+```
+
+To permanently remove:
+```bash
+launchctl unload ~/Library/LaunchAgents/com.coinbase.dailytrade.plist
+rm ~/Library/LaunchAgents/com.coinbase.dailytrade.plist
+```
+
+**Note**: The script runs on every login. To ensure it only executes once per day, the Python script includes logic to check if it has already run today.
+---
+
 ## Results
 
 **NOTE** need to retest with more data as of 1/15, the 75 day is outperforming the 60 day

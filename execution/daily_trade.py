@@ -5,6 +5,17 @@ Runs rebalance.py, logs results, and sends email summary
 import os, sys, json, subprocess, smtplib
 from datetime import datetime, UTC
 from pathlib import Path
+
+# Check if already ran today
+flag_file = '/tmp/coinbase_trade_last_run.txt'
+today = datetime.now().strftime('%Y-%m-%d')
+
+if os.path.exists(flag_file):
+    with open(flag_file, 'r') as f:
+        last_run = f.read().strip()
+    if last_run == today:
+        print(f"Already ran today ({today}). Exiting.")
+        sys.exit(0)
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from dotenv import load_dotenv
@@ -221,6 +232,10 @@ def main():
     print(f"{'='*60}\n")
     
     send_email(subject, body)
+    
+    # Mark as run today
+    with open(flag_file, 'w') as f:
+        f.write(today)
     
     print(f"\nDaily trade execution complete\n")
 
